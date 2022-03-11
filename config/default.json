@@ -1,0 +1,14 @@
+{
+  "spotify": {
+      "client-id": "blabla",
+      "client-secret": "blabla"
+  },
+  "deezer": {
+    "client-id": "blabla",
+    "client-secret": "blabla2"
+  },
+  "google": {
+    "client-id": "blabla",
+    "client-secret": "blabla2"
+  }
+}

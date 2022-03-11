@@ -1,11 +1,9 @@
-import express from "express";
-import cors from "cors";
-
 const PORT = 5000;
 
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
-const redirect_uri = "http://localhost:5000/spotifyCallback";
+const express = require('express');
+const cors = require('cors');
+const spotifyAdapter = require('./spotify/spotifyAdapter.js');
+const config = require('config');
 
 const spotifyAuthEndpoint = "https://accounts.spotify.com/authorize?";
 const scopes = [
@@ -20,10 +18,10 @@ const scopes = [
 
 const urlBuildSpotify = 
 	spotifyAuthEndpoint +
-	"client_id=" + client_id
+	"client_id=" + config.get('spotify.client-id') +
 	"&redirect_uri=http://localhost:5000/spotifyCallback" +
 	"&scope=" + scopes +
-	"&response_type=token&show_dialog=true";
+	"&response_type=code&show_dialog=true";
 
 const app = express()
 app.use(cors());
@@ -33,12 +31,19 @@ app.get('/', (req,res) => {
 });
 
 app.get("/loginSpotify", (req,res) => {
-	console.log(urlBuildSpotify);
-	res.redirect(urlBuildSpotify)
+	res.redirect(urlBuildSpotify);
+	//return spotifyAdapter.getLoginSpotify(urlBuildSpotify)
+	//res.json('sup')
+
 })
 
 app.get("/spotifyCallback", (req, res) => {
-	res.json('sup')
+	const current_url = new URL('http://localhost:5000'+res.req.url);
+	const search_params = current_url.searchParams;
+
+	const accessToken = search_params.get('code');
+
+	res.json(accessToken);
 })
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
