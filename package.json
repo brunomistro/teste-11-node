@@ -2,7 +2,7 @@
   "name": "teste-11-node",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "require",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.7",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "querystring": "^0.2.1",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.9"
   },
   "repository": {
